@@ -1,4 +1,3 @@
-# All of these are required to run the program
 import time
 
 import random_address
@@ -8,7 +7,8 @@ from colorama import Fore, Back, Style
 import random
 import random
 import string
-
+from random_profile import RandomProfile
+rp = RandomProfile(num=1)
 # All States Abbreviations are provided below
 # CA
 # CT
@@ -38,6 +38,7 @@ print(Fore.RED + "[------------------------------------------]")
 print(Fore.RED + "              Content Table")
 print(Fore.RED + " (1) Name Generator    (2) Address generator")
 print(Fore.RED + " (3) Name+Address       (4) Gmail generator")
+print(Fore.RED + "           (5) Profile Generator")
 print(Fore.RED + "[------------------------------------------]")
 
 option = input(Fore.GREEN + "Option: ")
@@ -130,4 +131,19 @@ if option == "4":
     print(random_char(7) + "@gmail.com")
     gmail()
 
-
+if option == "5":
+    def profile():
+        print(Fore.RED + "[------------------------------------------]")
+        print(Fore.CYAN + "        ______    _   _               ")
+        print(Fore.CYAN + "       |  ____|  | | | |              ")
+        print(Fore.CYAN + "       | |__ __ _| |_| |__   ___ _ __ ")
+        print(Fore.CYAN + "       |  __/ _` | __| '_ \ / _ \ '__|")
+        print(Fore.CYAN + "       | | | (_| | |_| | | |  __/ |   ")
+        print(Fore.CYAN + "       |_|  \__,_|\__|_| |_|\___|_|   ")
+        print(Fore.GREEN + "           PROFILE GENERATOR")
+        print(Fore.RED + "[------------------------------------------]")
+        print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
+        print(Fore.RED + "[------------------------------------------]")
+        print("Profile : ")
+        print(rp.full_profile())
+    profile()
