@@ -1,5 +1,4 @@
 import time
-
 import random_address
 from random_address import real_random_address
 import names
@@ -34,13 +33,17 @@ logoASCII = [" ______    _   _               ",
              "| | | (_| | |_| | | |  __/ |   ",
              "|_|  \__,_|\__|_| |_|\___|_|   "  ]
 
+def printSeparator():
+    """ Prints the separator bar used throughout the user interface. """
+    print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
+
 def printTitle(title: str):
     """ Prints the logo with a section title embedded inside. """
-    print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
+    printSeparator()
     for line in logoASCII:
         print(Fore.CYAN + line.center(lineLength))
     print(Fore.GREEN + title.center(lineLength))
-    print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
+    printSeparator()
 
 def askToContinue() -> bool:
     """ Asks the user if they would like to continue, returning True for yes and False for no. """
@@ -62,12 +65,12 @@ def askToContinue() -> bool:
 
 printTitle("Welcome to Random Information Generation")
 print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-print(Fore.RED + "[------------------------------------------]")
+printSeparator()
 print(Fore.RED + "              Content Table")
 print(Fore.RED + " (1) Name Generator    (2) Address generator")
 print(Fore.RED + " (3) Name+Address       (4) Gmail generator")
 print(Fore.RED + "           (5) Profile Generator")
-print(Fore.RED + "[------------------------------------------]")
+printSeparator()
 
 option = input(Fore.GREEN + "Option: ")
 
@@ -75,7 +78,7 @@ if option == "1":
     while True:
         printTitle("NAME GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "Tool made by Father VonTayvious#0001".center(lineLength))
-        print(Fore.RED + "[------------------------------------------]")
+        printSeparator()
 
         choice = input("Full, First, or Last: ")
         sanatizedChoice = choice.lower()
@@ -100,7 +103,7 @@ if option == "2":
     def address():
         printTitle("ADDRESS GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        print(Fore.RED + "[------------------------------------------]")
+        printSeparator()
 
         state = input("State (CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
 
@@ -111,7 +114,7 @@ if option == "3":
     def both():
         printTitle("Name+Address Gen")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        print(Fore.RED + "[------------------------------------------]")
+        printSeparator()
 
         print("Name: " + names.get_full_name())
         print("Address: ")
@@ -121,7 +124,7 @@ if option == "4":
     def random_char(y):
         printTitle("GMAIL GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        print(Fore.RED + "[------------------------------------------]")
+        printSeparator()
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
 
@@ -131,7 +134,7 @@ if option == "5":
     def profile():
         printTitle("PROFILE GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        print(Fore.RED + "[------------------------------------------]")
+        printSeparator()
         print("Profile : ")
         for property, value in rp.full_profile()[0].items():
             print("\t{}: {}".format(property, value))
