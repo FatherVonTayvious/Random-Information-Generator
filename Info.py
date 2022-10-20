@@ -3,7 +3,7 @@ import time
 import random_address
 from random_address import real_random_address
 import names
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
 import random
 import random
 import string
@@ -42,6 +42,23 @@ def printTitle(title: str):
     print(Fore.GREEN + title.center(lineLength))
     print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
 
+def askToContinue() -> bool:
+    """ Asks the user if they would like to continue, returning True for yes and False for no. """
+    while True:
+        choice = input("Would you like to continue? [Y/N]: ")
+        if not choice:
+            continue
+
+        sanatizedChoice = choice[0].lower()
+
+        if sanatizedChoice == 'y':
+            return True
+        elif sanatizedChoice == 'n':
+            return False
+        else:
+            print(f"Invalid option '{choice}'!")
+
+
 
 printTitle("Welcome to Random Information Generation")
 print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
@@ -55,28 +72,29 @@ print(Fore.RED + "[------------------------------------------]")
 option = input(Fore.GREEN + "Option: ")
 
 if option == "1":
-    def name():
+    while True:
         printTitle("NAME GENERATOR")
-        print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
+        print(Style.BRIGHT + Fore.YELLOW + "Tool made by Father VonTayvious#0001".center(lineLength))
         print(Fore.RED + "[------------------------------------------]")
 
-        opt2 = input("Full,First or Last: ")
+        choice = input("Full, First, or Last: ")
+        sanatizedChoice = choice.lower()
 
-        if opt2.lower() in ['Full', 'full']:
+        if sanatizedChoice == "full":
             print("Name: " + names.get_full_name())
+        elif sanatizedChoice == "first":
+            print("Name: " + names.get_first_name())
+        elif sanatizedChoice == 'last':
+            print("Name: " + names.get_first_name())
         else:
-            if opt2.lower() in ['First', 'first']:
-                print("Name: " + names.get_first_name())
-            else:
-                if opt2.lower() in ['Last', 'last']:
-                    print("Name: " + names.get_first_name())
-                    time.sleep(2)
-                    _0x47 = input("Would you like to exit? [Y/N]: ")
-                    if _0x47 == "Y":
-                        return
-                    elif _0x47 == "N":
-                        return name()
-    name()
+            print(f"Invalid option '{choice}'!")
+            continue
+            
+        time.sleep(2)
+        if not askToContinue():
+            break
+                    
+                    
 
 if option == "2":
     def address():
