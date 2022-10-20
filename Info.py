@@ -108,7 +108,6 @@ if option == "4":
 
 
     print(random_char(7) + "@gmail.com")
-    gmail()
 
 if option == "5":
     def profile():
