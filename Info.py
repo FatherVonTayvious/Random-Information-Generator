@@ -35,6 +35,11 @@ logoASCII = [" ______    _   _               ",
 def printSeparator():
     """ Prints the separator bar used throughout the user interface. """
     print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
+ 
+def printCredits():
+    """ Prints out credits. Emphasis on perfected, look at how it looked on the 4th commit. You're welcome. """
+    print(Style.BRIGHT + Fore.YELLOW + "Tool made by TheArchitect#8198".center(lineLength))
+    print(Style.BRIGHT + Fore.YELLOW + "     perfected by jan Epiphany".center(lineLength))
 
 def printTitle(title: str):
     """ Prints the logo with a section title embedded inside. """
@@ -42,6 +47,8 @@ def printTitle(title: str):
     for line in logoASCII:
         print(Fore.CYAN + line.center(lineLength))
     print(Fore.GREEN + title.center(lineLength))
+    printSeparator()
+    printCredits()
     printSeparator()
 
 def askToContinue() -> bool:
@@ -66,8 +73,6 @@ def getName():
     """ Name generator. """
     while True:
         printTitle("NAME GENERATOR")
-        print(Style.BRIGHT + Fore.YELLOW + "Tool made by Father VonTayvious#0001".center(lineLength))
-        printSeparator()
 
         choice = input("Full, First, or Last: ")
         sanatizedChoice = choice.lower()
@@ -89,8 +94,6 @@ def getName():
 def getAddress():
     """ Address generator. """
     printTitle("ADDRESS GENERATOR")
-    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-    printSeparator()
 
     state = input("State (CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
 
@@ -99,8 +102,6 @@ def getAddress():
 def getNameAddress():
     """ Name and address generator. """
     printTitle("Name+Address Gen")
-    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-    printSeparator()
 
     print("Name: " + names.get_full_name())
     print("Address: ")
@@ -112,15 +113,11 @@ def getGmail():
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
     printTitle("GMAIL GENERATOR")
-    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-    printSeparator()
     print(random_char(7) + "@gmail.com")
 
 def getProfile():
     """ Profile generator. """
     printTitle("PROFILE GENERATOR")
-    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-    printSeparator()
     print("Profile : ")
     for property, value in rp.full_profile()[0].items():
         print("\t{}: {}".format(property, value))
@@ -129,8 +126,6 @@ def getProfile():
 
 def main():
     printTitle("Welcome to Random Information Generation")
-    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-    printSeparator()
     print(Fore.RED + "              Content Table")
     print(Fore.RED + " (1) Name Generator    (2) Address generator")
     print(Fore.RED + " (3) Name+Address       (4) Gmail generator")
