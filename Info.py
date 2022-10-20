@@ -1,6 +1,5 @@
 import time
 import random_address
-from random_address import real_random_address
 import names
 from colorama import Fore, Style
 import random
@@ -63,18 +62,8 @@ def askToContinue() -> bool:
 
 
 
-printTitle("Welcome to Random Information Generation")
-print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-printSeparator()
-print(Fore.RED + "              Content Table")
-print(Fore.RED + " (1) Name Generator    (2) Address generator")
-print(Fore.RED + " (3) Name+Address       (4) Gmail generator")
-print(Fore.RED + "           (5) Profile Generator")
-printSeparator()
-
-option = input(Fore.GREEN + "Option: ")
-
-if option == "1":
+def getName():
+    """ Name generator. """
     while True:
         printTitle("NAME GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "Tool made by Father VonTayvious#0001".center(lineLength))
@@ -96,46 +85,72 @@ if option == "1":
         time.sleep(2)
         if not askToContinue():
             break
-                    
-                    
+                
+def getAddress():
+    """ Address generator. """
+    printTitle("ADDRESS GENERATOR")
+    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
+    printSeparator()
 
-if option == "2":
-    def address():
-        printTitle("ADDRESS GENERATOR")
-        print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        printSeparator()
+    state = input("State (CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
 
-        state = input("State (CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
+    print(random_address.real_random_address_by_state(state))
 
-        print(random_address.real_random_address_by_state(state))
-    address()
+def getNameAddress():
+    """ Name and address generator. """
+    printTitle("Name+Address Gen")
+    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
+    printSeparator()
 
-if option == "3":
-    def both():
-        printTitle("Name+Address Gen")
-        print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        printSeparator()
-
-        print("Name: " + names.get_full_name())
-        print("Address: ")
-        print(random_address.real_random_address_by_state('CA'))
-    both()
-if option == "4":
+    print("Name: " + names.get_full_name())
+    print("Address: ")
+    print(random_address.real_random_address_by_state('CA'))
+    
+def getGmail():
+    """ Gmail generator. """
     def random_char(y):
-        printTitle("GMAIL GENERATOR")
-        print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        printSeparator()
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
-
+    printTitle("GMAIL GENERATOR")
+    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
+    printSeparator()
     print(random_char(7) + "@gmail.com")
 
-if option == "5":
-    def profile():
-        printTitle("PROFILE GENERATOR")
-        print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
-        printSeparator()
-        print("Profile : ")
-        for property, value in rp.full_profile()[0].items():
-            print("\t{}: {}".format(property, value))
-    profile()
+def getProfile():
+    """ Profile generator. """
+    printTitle("PROFILE GENERATOR")
+    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
+    printSeparator()
+    print("Profile : ")
+    for property, value in rp.full_profile()[0].items():
+        print("\t{}: {}".format(property, value))
+
+
+
+def main():
+    printTitle("Welcome to Random Information Generation")
+    print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
+    printSeparator()
+    print(Fore.RED + "              Content Table")
+    print(Fore.RED + " (1) Name Generator    (2) Address generator")
+    print(Fore.RED + " (3) Name+Address       (4) Gmail generator")
+    print(Fore.RED + "           (5) Profile Generator")
+    printSeparator()
+
+    option = input(Fore.GREEN + "Option: ")
+
+    if option == '1':
+        getName()
+    elif option == '2':
+        getAddress()
+    elif option == '3':
+        getNameAddress()
+    elif option == '4':
+        getGmail()
+    elif option == '5':
+        getProfile()
+    else:
+        print(f"Invalid option '{option}'!")
+
+if __name__ == '__main__':
+    main()
