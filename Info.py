@@ -115,5 +115,6 @@ if option == "5":
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
         print(Fore.RED + "[------------------------------------------]")
         print("Profile : ")
-        print(rp.full_profile())
+        for property, value in rp.full_profile()[0].items():
+            print("\t{}: {}".format(property, value))
     profile()
