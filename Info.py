@@ -24,15 +24,26 @@ rp = RandomProfile(num=1)
 # OK
 # TX
 
-print(Fore.RED + "[------------------------------------------]")
-print(Fore.CYAN + "        ______    _   _               ")
-print(Fore.CYAN + "       |  ____|  | | | |              ")
-print(Fore.CYAN + "       | |__ __ _| |_| |__   ___ _ __ ")
-print(Fore.CYAN + "       |  __/ _` | __| '_ \ / _ \ '__|")
-print(Fore.CYAN + "       | | | (_| | |_| | | |  __/ |   ")
-print(Fore.CYAN + "       |_|  \__,_|\__|_| |_|\___|_|   ")
-print(Fore.GREEN + "  Welcome to Random Information Generation")
-print(Fore.RED + "[------------------------------------------]")
+
+# Length each line printed.
+lineLength = 44
+logoASCII = [" ______    _   _               ",
+             "|  ____|  | | | |              ",
+             "| |__ __ _| |_| |__   ___ _ __ ",
+             "|  __/ _` | __| '_ \ / _ \ '__|",
+             "| | | (_| | |_| | | |  __/ |   ",
+             "|_|  \__,_|\__|_| |_|\___|_|   "  ]
+
+def printTitle(title: str):
+    """ Prints the logo with a section title embedded inside. """
+    print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
+    for line in logoASCII:
+        print(Fore.CYAN + line.center(lineLength))
+    print(Fore.GREEN + title.center(lineLength))
+    print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
+
+
+printTitle("Welcome to Random Information Generation")
 print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
 print(Fore.RED + "[------------------------------------------]")
 print(Fore.RED + "              Content Table")
@@ -45,15 +56,7 @@ option = input(Fore.GREEN + "Option: ")
 
 if option == "1":
     def name():
-        print(Fore.RED + "[------------------------------------------]")
-        print(Fore.CYAN + "        ______    _   _               ")
-        print(Fore.CYAN + "       |  ____|  | | | |              ")
-        print(Fore.CYAN + "       | |__ __ _| |_| |__   ___ _ __ ")
-        print(Fore.CYAN + "       |  __/ _` | __| '_ \ / _ \ '__|")
-        print(Fore.CYAN + "       | | | (_| | |_| | | |  __/ |   ")
-        print(Fore.CYAN + "       |_|  \__,_|\__|_| |_|\___|_|   ")
-        print(Fore.GREEN + "             NAME GENERATOR")
-        print(Fore.RED + "[------------------------------------------]")
+        printTitle("NAME GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
         print(Fore.RED + "[------------------------------------------]")
 
@@ -77,15 +80,7 @@ if option == "1":
 
 if option == "2":
     def address():
-        print(Fore.RED + "[------------------------------------------]")
-        print(Fore.CYAN + "        ______    _   _               ")
-        print(Fore.CYAN + "       |  ____|  | | | |              ")
-        print(Fore.CYAN + "       | |__ __ _| |_| |__   ___ _ __ ")
-        print(Fore.CYAN + "       |  __/ _` | __| '_ \ / _ \ '__|")
-        print(Fore.CYAN + "       | | | (_| | |_| | | |  __/ |   ")
-        print(Fore.CYAN + "       |_|  \__,_|\__|_| |_|\___|_|   ")
-        print(Fore.GREEN + "           ADDRESS GENERATOR")
-        print(Fore.RED + "[------------------------------------------]")
+        printTitle("ADDRESS GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
         print(Fore.RED + "[------------------------------------------]")
 
@@ -96,15 +91,7 @@ if option == "2":
 
 if option == "3":
     def both():
-        print(Fore.RED + "[------------------------------------------]")
-        print(Fore.CYAN + "        ______    _   _               ")
-        print(Fore.CYAN + "       |  ____|  | | | |              ")
-        print(Fore.CYAN + "       | |__ __ _| |_| |__   ___ _ __ ")
-        print(Fore.CYAN + "       |  __/ _` | __| '_ \ / _ \ '__|")
-        print(Fore.CYAN + "       | | | (_| | |_| | | |  __/ |   ")
-        print(Fore.CYAN + "       |_|  \__,_|\__|_| |_|\___|_|   ")
-        print(Fore.GREEN + "           Name+Address Gen")
-        print(Fore.RED + "[------------------------------------------]")
+        printTitle("Name+Address Gen")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
         print(Fore.RED + "[------------------------------------------]")
 
@@ -114,15 +101,7 @@ if option == "3":
     both()
 if option == "4":
     def random_char(y):
-        print(Fore.RED + "[------------------------------------------]")
-        print(Fore.CYAN + "        ______    _   _               ")
-        print(Fore.CYAN + "       |  ____|  | | | |              ")
-        print(Fore.CYAN + "       | |__ __ _| |_| |__   ___ _ __ ")
-        print(Fore.CYAN + "       |  __/ _` | __| '_ \ / _ \ '__|")
-        print(Fore.CYAN + "       | | | (_| | |_| | | |  __/ |   ")
-        print(Fore.CYAN + "       |_|  \__,_|\__|_| |_|\___|_|   ")
-        print(Fore.GREEN + "           GMAIL GENERATOR")
-        print(Fore.RED + "[------------------------------------------]")
+        printTitle("GMAIL GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
         print(Fore.RED + "[------------------------------------------]")
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
@@ -133,15 +112,7 @@ if option == "4":
 
 if option == "5":
     def profile():
-        print(Fore.RED + "[------------------------------------------]")
-        print(Fore.CYAN + "        ______    _   _               ")
-        print(Fore.CYAN + "       |  ____|  | | | |              ")
-        print(Fore.CYAN + "       | |__ __ _| |_| |__   ___ _ __ ")
-        print(Fore.CYAN + "       |  __/ _` | __| '_ \ / _ \ '__|")
-        print(Fore.CYAN + "       | | | (_| | |_| | | |  __/ |   ")
-        print(Fore.CYAN + "       |_|  \__,_|\__|_| |_|\___|_|   ")
-        print(Fore.GREEN + "           PROFILE GENERATOR")
-        print(Fore.RED + "[------------------------------------------]")
+        printTitle("PROFILE GENERATOR")
         print(Style.BRIGHT + Fore.YELLOW + "    Tool made by Father VonTayvious#0001")
         print(Fore.RED + "[------------------------------------------]")
         print("Profile : ")
