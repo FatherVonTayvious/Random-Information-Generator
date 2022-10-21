@@ -1,6 +1,5 @@
 import random
 import string
-import time
 from typing import Callable
 
 import names
