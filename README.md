@@ -5,5 +5,4 @@ This tool is made to generate Randomized information. All addresses generated AR
 
 - Colorama - https://pypi.org/project/colorama/
 - Random Address - https://pypi.org/project/random-address/
-- names - https://pypi.org/project/names/
 - RandomProfile - https://pypi.org/project/random-profile/

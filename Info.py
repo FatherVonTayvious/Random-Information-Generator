@@ -1,14 +1,12 @@
 import random
 import string
-from typing import Callable
+from typing import Any, Callable
 
-import names
 from random_address import real_random_address_by_state, real_random_address
 import colorama
 from colorama import Fore, Style
 from random_profile import RandomProfile
 
-rp = RandomProfile(num=1)
 # All States Abbreviations are provided below
 # CA
 # CT
@@ -69,11 +67,11 @@ def askToContinue() -> bool:
         else:
             print(f"Invalid option '{choice}'!")
 
-def loopUntilStopped(function: Callable[[], None]):
+def loopUntilStopped(function: Callable[..., None], *arguments: Any):
     """ Continuosly runs the given the function, asking the user if they would like to continue every iteration. Will run until
         they say no. """
     while True:
-        function()
+        function(*arguments)
 
         if not askToContinue():
             break
@@ -86,7 +84,7 @@ def addressToString(address: dict) -> str:
 
 
 
-def getName():
+def getName(randomProfile: RandomProfile):
     """ Name generator. """
     printTitle("NAME GENERATOR")
 
@@ -94,11 +92,11 @@ def getName():
     sanatizedChoice = choice.lower()
 
     if sanatizedChoice == "full":
-        print("Name: " + names.get_full_name())
+        print(f"Name: {randomProfile.full_name()[0]}")
     elif sanatizedChoice == "first":
-        print("Name: " + names.get_first_name())
+        print(f"Name: {randomProfile.first_name()[0]}")
     elif sanatizedChoice == 'last':
-        print("Name: " + names.get_first_name())
+        print(f"Name: {randomProfile.last_name()[0]}")
     else:
         print(f"Invalid option '{choice}'!")
 
@@ -111,14 +109,14 @@ def getAddress():
     address = real_random_address_by_state(state.upper())
 
     # real_random_address_by_state() can return an empty dict if no addresses could be found for the given state.
-    if address: print(addressToString(address))
+    if address: print(f"Address: {addressToString(address)}")
     else:       print(f"No addresses found for '{state}'")
 
-def getNameAddress():
+def getNameAddress(randomProfile: RandomProfile):
     """ Name and address generator. """
     printTitle("Name+Address Gen")
 
-    print(f"Name: {names.get_full_name()}")
+    print(f"Name: {randomProfile.full_name()[0]}")
     print(f"Address: {addressToString(real_random_address())}")
     
 def getGmail():
@@ -129,18 +127,19 @@ def getGmail():
     printTitle("GMAIL GENERATOR")
     print(random_char(7) + "@gmail.com")
 
-def getProfile():
+def getProfile(randomProfile: RandomProfile):
     """ Profile generator. """
     printTitle("PROFILE GENERATOR")
     print("Profile : ")
-    for property, value in rp.full_profile()[0].items():
+    for property, value in randomProfile.full_profile()[0].items():
         print("\t{}: {}".format(property, value))
 
 
 
 def main():
-    # Intializes ANSI color code support for Windows if needed.
+    # Initializes ANSI color code support for Windows if needed.
     colorama.init()
+    randomProfile = RandomProfile()
 
     printTitle("Welcome to Random Information Generation")
     print(Fore.RED + "              Content Table")
@@ -152,15 +151,15 @@ def main():
     option = input(Fore.GREEN + "Option: ")
 
     if option == '1':
-        loopUntilStopped(getName)
+        loopUntilStopped(getName, randomProfile)
     elif option == '2':
         loopUntilStopped(getAddress)
     elif option == '3':
-        loopUntilStopped(getNameAddress)
+        loopUntilStopped(getNameAddress, randomProfile)
     elif option == '4':
         loopUntilStopped(getGmail)
     elif option == '5':
-        loopUntilStopped(getProfile)
+        loopUntilStopped(getProfile, randomProfile)
     else:
         print(f"Invalid option '{option}'!")
 
