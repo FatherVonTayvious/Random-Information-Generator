@@ -34,21 +34,25 @@ logoASCII = [" ______    _   _               ",
 
 def printSeparator():
     """ Prints the separator bar used throughout the user interface. """
-    print(Fore.RED + "[{}]".format('-' * (lineLength-2)))
- 
-def printCredits():
-    """ Prints out credits. Emphasis on perfected, look at how it looked on the 4th commit. You're welcome. """
-    print(Style.BRIGHT + Fore.YELLOW + "Tool made by TheArchitect#8198".center(lineLength))
-    print(Style.BRIGHT + Fore.YELLOW + "     perfected by jan Epiphany".center(lineLength))
+    print(end=Fore.RED)
+    print("[{}]".format('-' * (lineLength-2)))
 
 def printTitle(title: str):
     """ Prints the logo with a section title embedded inside. """
     printSeparator()
+
+    print(end=Fore.CYAN)
     for line in logoASCII:
-        print(Fore.CYAN + line.center(lineLength))
-    print(Fore.GREEN + title.center(lineLength))
+        print(line.center(lineLength))
+    print(Fore.GREEN); print(title.center(lineLength))
+
     printSeparator()
-    printCredits()
+
+    # Emphasis on perfected, look at how it was on the 4th commit. You're welcome.
+    print(end=Fore.YELLOW)
+    print("Tool made by TheArchitect#8198".center(lineLength))
+    print("     perfected by jan Epiphany".center(lineLength))
+
     printSeparator()
 
 def askToContinue() -> bool:
@@ -84,25 +88,27 @@ def addressToString(address: dict) -> str:
 
 
 
-def getName(randomProfile: RandomProfile):
+def getName(randomGenerator: RandomProfile):
     """ Name generator. """
     printTitle("NAME GENERATOR")
+    print(end=Fore.GREEN)
 
     choice = input("Full, First, or Last: ")
     sanatizedChoice = choice.lower()
 
     if sanatizedChoice == "full":
-        print(f"Name: {randomProfile.full_name()[0]}")
+        print(f"Name: {randomGenerator.full_name()[0]}")
     elif sanatizedChoice == "first":
-        print(f"Name: {randomProfile.first_name()[0]}")
+        print(f"Name: {randomGenerator.first_name()[0]}")
     elif sanatizedChoice == 'last':
-        print(f"Name: {randomProfile.last_name()[0]}")
+        print(f"Name: {randomGenerator.last_name()[0]}")
     else:
         print(f"Invalid option '{choice}'!")
 
 def getAddress():
     """ Address generator. """
     printTitle("ADDRESS GENERATOR")
+    print(end=Fore.GREEN)
 
     state = input("Enter a two-letter state (e.x. CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
     # real_random_address_by_state() only recognizes upper case charaters.
@@ -112,11 +118,12 @@ def getAddress():
     if address: print(f"Address: {addressToString(address)}")
     else:       print(f"No addresses found for '{state}'")
 
-def getNameAddress(randomProfile: RandomProfile):
+def getNameAddress(randomGenerator: RandomProfile):
     """ Name and address generator. """
     printTitle("Name+Address Gen")
+    print(end=Fore.GREEN)
 
-    print(f"Name: {randomProfile.full_name()[0]}")
+    print(f"Name: {randomGenerator.full_name()[0]}")
     print(f"Address: {addressToString(real_random_address())}")
     
 def getGmail():
@@ -125,43 +132,54 @@ def getGmail():
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
     printTitle("GMAIL GENERATOR")
+    print(end=Fore.GREEN)
+
     print(random_char(7) + "@gmail.com")
 
-def getProfile(randomProfile: RandomProfile):
+def getProfile(randomGenerator: RandomProfile):
     """ Profile generator. """
     printTitle("PROFILE GENERATOR")
+    print(end=Fore.GREEN)
+
     print("Profile : ")
-    for property, value in randomProfile.full_profile()[0].items():
+    for property, value in randomGenerator.full_profile()[0].items():
         print("\t{}: {}".format(property, value))
 
 
 
 def main():
+    randomGenerator = RandomProfile()
     # Initializes ANSI color code support for Windows if needed.
     colorama.init()
-    randomProfile = RandomProfile()
+    # Makes all colors bright for that extra A E S T H E T I C.
+    print(end=Style.BRIGHT)
 
-    printTitle("Welcome to Random Information Generation")
-    print(Fore.RED + "              Content Table")
-    print(Fore.RED + " (1) Name Generator    (2) Address generator")
-    print(Fore.RED + " (3) Name+Address       (4) Gmail generator")
-    print(Fore.RED + "           (5) Profile Generator")
-    printSeparator()
+    while True:
+        printTitle("Welcome to Random Information Generation")
 
-    option = input(Fore.GREEN + "Option: ")
+        print(end=Fore.GREEN)
+        print("Content Table".center(lineLength))
+        print("(1) Name Generator     (2) Address generator".center(lineLength))
+        print("(3) Name+Address       (4) Gmail generator  ".center(lineLength))
+        print("(5) Profile Generator  (6) Exit             ".center(lineLength))
+        printSeparator()
 
-    if option == '1':
-        loopUntilStopped(getName, randomProfile)
-    elif option == '2':
-        loopUntilStopped(getAddress)
-    elif option == '3':
-        loopUntilStopped(getNameAddress, randomProfile)
-    elif option == '4':
-        loopUntilStopped(getGmail)
-    elif option == '5':
-        loopUntilStopped(getProfile, randomProfile)
-    else:
-        print(f"Invalid option '{option}'!")
+        print(end=Fore.GREEN); option = input("Option: ")
+
+        if option == '1':
+            loopUntilStopped(getName, randomGenerator)
+        elif option == '2':
+            loopUntilStopped(getAddress)
+        elif option == '3':
+            loopUntilStopped(getNameAddress, randomGenerator)
+        elif option == '4':
+            loopUntilStopped(getGmail)
+        elif option == '5':
+            loopUntilStopped(getProfile, randomGenerator)
+        elif option == '6':
+            break
+        else:
+            print(end=Fore.RED); print(f"Invalid option '{option}'!")
 
 if __name__ == '__main__':
     main()
