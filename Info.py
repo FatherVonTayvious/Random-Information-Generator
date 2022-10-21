@@ -1,11 +1,13 @@
-import time
-import random_address
-import names
-from colorama import Fore, Style
-import random
 import random
 import string
+import time
+from typing import Callable
+
+import names
+import random_address
+from colorama import Fore, Style
 from random_profile import RandomProfile
+
 rp = RandomProfile(num=1)
 # All States Abbreviations are provided below
 # CA
@@ -67,37 +69,41 @@ def askToContinue() -> bool:
         else:
             print(f"Invalid option '{choice}'!")
 
+def loopUntilStopped(function: Callable[[], None]):
+    """ Continuosly runs the given the function, asking the user if they would like to continue every iteration. Will run until
+        they say no. """
+    while True:
+        function()
+
+        if not askToContinue():
+            break
+
 
 
 def getName():
     """ Name generator. """
-    while True:
-        printTitle("NAME GENERATOR")
+    printTitle("NAME GENERATOR")
 
-        choice = input("Full, First, or Last: ")
-        sanatizedChoice = choice.lower()
+    choice = input("Full, First, or Last: ")
+    sanatizedChoice = choice.lower()
 
-        if sanatizedChoice == "full":
-            print("Name: " + names.get_full_name())
-        elif sanatizedChoice == "first":
-            print("Name: " + names.get_first_name())
-        elif sanatizedChoice == 'last':
-            print("Name: " + names.get_first_name())
-        else:
-            print(f"Invalid option '{choice}'!")
-            continue
-            
-        time.sleep(2)
-        if not askToContinue():
-            break
-                
+    if sanatizedChoice == "full":
+        print("Name: " + names.get_full_name())
+    elif sanatizedChoice == "first":
+        print("Name: " + names.get_first_name())
+    elif sanatizedChoice == 'last':
+        print("Name: " + names.get_first_name())
+    else:
+        print(f"Invalid option '{choice}'!")
+                    
 def getAddress():
     """ Address generator. """
     printTitle("ADDRESS GENERATOR")
 
     state = input("State (CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
+    address = random_address.real_random_address_by_state(state)
 
-    print(random_address.real_random_address_by_state(state))
+    print(address["address1"], address["city"], address["state"], address["postalCode"])
 
 def getNameAddress():
     """ Name and address generator. """
@@ -135,15 +141,15 @@ def main():
     option = input(Fore.GREEN + "Option: ")
 
     if option == '1':
-        getName()
+        loopUntilStopped(getName)
     elif option == '2':
-        getAddress()
+        loopUntilStopped(getAddress)
     elif option == '3':
-        getNameAddress()
+        loopUntilStopped(getNameAddress)
     elif option == '4':
-        getGmail()
+        loopUntilStopped(getGmail)
     elif option == '5':
-        getProfile()
+        loopUntilStopped(getProfile)
     else:
         print(f"Invalid option '{option}'!")
 
