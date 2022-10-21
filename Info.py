@@ -3,7 +3,8 @@ import string
 from typing import Callable
 
 import names
-import random_address
+from random_address import real_random_address_by_state, real_random_address
+import colorama
 from colorama import Fore, Style
 from random_profile import RandomProfile
 
@@ -79,6 +80,12 @@ def loopUntilStopped(function: Callable[[], None]):
 
 
 
+def addressToString(address: dict) -> str:
+    """ Converts the addresses produced by Random Address into a human-readable string. """
+    return f"{address['address1']}, {address['city']}, {address['state']} {address['postalCode']}, USA"
+
+
+
 def getName():
     """ Name generator. """
     printTitle("NAME GENERATOR")
@@ -94,23 +101,25 @@ def getName():
         print("Name: " + names.get_first_name())
     else:
         print(f"Invalid option '{choice}'!")
-                    
+
 def getAddress():
     """ Address generator. """
     printTitle("ADDRESS GENERATOR")
 
-    state = input("State (CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
-    address = random_address.real_random_address_by_state(state)
+    state = input("Enter a two-letter state (e.x. CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
+    # real_random_address_by_state() only recognizes upper case charaters.
+    address = real_random_address_by_state(state.upper())
 
-    print(address["address1"], address["city"], address["state"], address["postalCode"])
+    # real_random_address_by_state() can return an empty dict if no addresses could be found for the given state.
+    if address: print(addressToString(address))
+    else:       print(f"No addresses found for '{state}'")
 
 def getNameAddress():
     """ Name and address generator. """
     printTitle("Name+Address Gen")
 
-    print("Name: " + names.get_full_name())
-    print("Address: ")
-    print(random_address.real_random_address_by_state('CA'))
+    print(f"Name: {names.get_full_name()}")
+    print(f"Address: {addressToString(real_random_address())}")
     
 def getGmail():
     """ Gmail generator. """
@@ -130,6 +139,9 @@ def getProfile():
 
 
 def main():
+    # Intializes ANSI color code support for Windows if needed.
+    colorama.init()
+
     printTitle("Welcome to Random Information Generation")
     print(Fore.RED + "              Content Table")
     print(Fore.RED + " (1) Name Generator    (2) Address generator")
