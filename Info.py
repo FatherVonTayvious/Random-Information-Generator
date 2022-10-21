@@ -123,7 +123,6 @@ def randomStringSecure(length: int) -> str:
 
 def nameMenu(randomGenerator: RandomProfile):
     """ Name generator. """
-    printTitle("NAME GENERATOR")
     print(end=Fore.GREEN)
 
     choice = input("Full, first, or last name: ")
@@ -146,7 +145,6 @@ def nameMenu(randomGenerator: RandomProfile):
 
 def addressMenu():
     """ Address generator. """
-    printTitle("(REAL) ADDRESS GENERATOR")
     print(end=Fore.GREEN)
 
     state = input("Enter a two-letter state (e.x. CA CT VT) to pull addresses from. Enter nothing for all states: ")
@@ -164,7 +162,6 @@ def addressMenu():
 
 def passwordMenu():
     """ Password generator. """
-    printTitle("PASSWORD GENERATOR")
     print(end=Fore.GREEN)
 
     length = inputNumberSafely("Enter the length of the password: ", canNegative=False)
@@ -175,7 +172,6 @@ def passwordMenu():
     
 def emailMenu(randomGenerator: RandomProfile):
     """ Email generator. """
-    printTitle("EMAIL GENERATOR")
     print(end=Fore.GREEN)
 
     times = inputNumberSafely("How many to generate?: ", canNegative=False)
@@ -190,7 +186,6 @@ def emailMenu(randomGenerator: RandomProfile):
 
 def profileMenu(randomGenerator: RandomProfile):
     """ Profile generator. """
-    printTitle("PROFILE GENERATOR")
     print(end=Fore.GREEN)
 
     times = inputNumberSafely("How many to generate?: ", canNegative=False)
@@ -202,7 +197,6 @@ def profileMenu(randomGenerator: RandomProfile):
 
 def coordinateMenu():
     """ Coordinate generator. """
-    printTitle("(USA) COORDINATE GENERATOR")
     print(end=Fore.GREEN)
 
     state = input("Enter a two-letter state (e.x. CA CT VT) to pull coordinates from. Enter nothing for all states: ")
@@ -241,16 +235,22 @@ def main():
         print(end=Fore.GREEN); option = input("Option: ")
 
         if option == '1':
+            printTitle("NAME GENERATOR")
             loopUntilStopped(nameMenu, randomGenerator)
         elif option == '2':
+            printTitle("(REAL) ADDRESS GENERATOR")
             loopUntilStopped(addressMenu)
         elif option == '3':
+            printTitle("PASSWORD GENERATOR")
             loopUntilStopped(passwordMenu)
         elif option == '4':
+            printTitle("EMAIL GENERATOR")
             loopUntilStopped(emailMenu, randomGenerator)
         elif option == '5':
+            printTitle("(FAKE) PROFILE GENERATOR")
             loopUntilStopped(profileMenu, randomGenerator)
         elif option == '6':
+            printTitle("(USA) COORDINATE GENERATOR")
             loopUntilStopped(coordinateMenu)
         elif option == '7':
             break
