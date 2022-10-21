@@ -1,6 +1,7 @@
 import random
+import secrets
 import string
-from typing import Any, Callable
+from typing import Any, Callable, Sequence
 
 import colorama
 from colorama import Fore, Style
@@ -56,10 +57,25 @@ def printTitle(title: str):
 
     printSeparator()
 
+def inputNumberSafely(prompt: object=..., canNegative: bool=True) -> int:
+    """ Prints the prompt to the user and returns the number they give. Should they not give a valid number it will ask them until
+        they do. If canNegative is False it will not accept negative numbers, make sure to tell user if necessary. """
+    while True:
+        choice = input(prompt)
+
+        try:
+            choice = int(choice)
+            if not canNegative and choice < 0: raise ValueError
+                
+            return choice
+
+        except ValueError:
+            print(f"Invalid number '{choice}'!")
+
 def askToContinue() -> bool:
     """ Asks the user if they would like to continue, returning True for yes and False for no. """
     while True:
-        choice = input("Would you like to continue? [Y/N]: ")
+        choice = input("Would you like to continue? [Y/n]: ")
         if not choice:
             continue
 
@@ -87,71 +103,100 @@ def addressToString(address: dict) -> str:
     """ Converts the addresses produced by Random Address into a human-readable string. """
     return f"{address['address1']}, {address['city']}, {address['state']} {address['postalCode']}, USA"
 
+def _randomString(choiceFunction: Callable[[Sequence], Any], length: int) -> str:
+    """ Common code for random string generation to avoid code duplication. """
+    return ''.join(choiceFunction(_randomString.alphanumerics) for _ in range(length))
+
+_randomString.alphanumerics = string.ascii_letters + string.digits
+
 def randomString(length: int) -> str:
-    """ Generates a string of randomly-selected alaphanumeric characters of the given length. """
-    return ''.join(random.choice(randomString.alphanumerics) for _ in range(length))
+    """ Generates a string of randomly-selected alphanumeric characters of the given length. """
+    return _randomString(random.choice, length)
 
-randomString.alphanumerics = string.ascii_letters + string.digits
+def randomStringSecure(length: int) -> str:
+    """ Generates a string of randomly-selected alphanumeric characters of the given length using the secrets module."""
+    return _randomString(secrets.choice, length)
 
 
 
-def getName(randomGenerator: RandomProfile):
+def nameMenu(randomGenerator: RandomProfile):
     """ Name generator. """
     printTitle("NAME GENERATOR")
     print(end=Fore.GREEN)
 
-    choice = input("Full, First, or Last: ")
+    choice = input("Full, first, or last name: ")
     sanatizedChoice = choice.lower()
+    chosenGenerator = None
 
     if sanatizedChoice == "full":
-        print(f"Name: {randomGenerator.full_name()[0]}")
+        chosenGenerator = randomGenerator.full_name
     elif sanatizedChoice == "first":
-        print(f"Name: {randomGenerator.first_name()[0]}")
+        chosenGenerator = randomGenerator.first_name
     elif sanatizedChoice == 'last':
-        print(f"Name: {randomGenerator.last_name()[0]}")
+        chosenGenerator = randomGenerator.last_name
     else:
         print(f"Invalid option '{choice}'!")
+        return
 
-def getAddress():
+    times = inputNumberSafely("How many to generate?: ", canNegative=False)
+    for i in range(1, times + 1):
+        print(f"Name {i}: {chosenGenerator()[0]}")
+
+def addressMenu():
     """ Address generator. """
     printTitle("ADDRESS GENERATOR")
     print(end=Fore.GREEN)
 
-    state = input("Enter a two-letter state (e.x. CA CT VT AL AR DC FL GA KY TN MD OK TX): ")
-    # real_random_address_by_state() only recognizes upper case charaters.
-    address = real_random_address_by_state(state.upper())
+    state = input("Enter a two-letter state (e.x. CA CT VT) to pull an address from. Enter nothing for all states: ")
+    times = inputNumberSafely("How many would you like to generate?: ", canNegative=False)
 
-    # real_random_address_by_state() can return an empty dict if no addresses could be found for the given state.
-    if address: print(f"Address: {addressToString(address)}")
-    else:       print(f"No addresses found for '{state}'")
+    for i in range(1, times + 1):
+        # real_random_address_by_state() only recognizes upper case charaters.
+        address = real_random_address_by_state(state.upper()) if state else real_random_address()
 
-def getNameAddress(randomGenerator: RandomProfile):
-    """ Name and address generator. """
-    printTitle("Name+Address Gen")
+        # real_random_address_by_state() can return an empty dict if no addresses could be found for the given state.
+        if address: 
+            print(f"Address {i}: {addressToString(address)}")
+        else:       
+            print(f"{i}: No addresses found for '{state}'")
+
+def passwordMenu():
+    """ Password generator. """
+    printTitle("PASSWORD GENERATOR")
     print(end=Fore.GREEN)
 
-    print(f"Name: {randomGenerator.full_name()[0]}")
-    print(f"Address: {addressToString(real_random_address())}")
+    length = inputNumberSafely("Enter the length of the password: ", canNegative=False)
+    times = inputNumberSafely("How many to generate?: ", canNegative=False)
+
+    for i in range(1, times + 1):
+        print(f"Password {i}: {randomStringSecure(length)}") 
     
-def getEmail(randomGenerator: RandomProfile):
+def emailMenu(randomGenerator: RandomProfile):
     """ Email generator. """
     printTitle("EMAIL GENERATOR")
     print(end=Fore.GREEN)
 
-    print("Email: {}.{}{}@{}".format(
-            randomGenerator.last_name()[0].lower(),
-            randomGenerator.first_name()[0].lower(),
-            randomString(random.randint(3, 7)),
-            random.choice(email_domains)))
+    times = inputNumberSafely("How many to generate?: ", canNegative=False)
 
-def getProfile(randomGenerator: RandomProfile):
+    for i in range(1, times + 1):
+        print("Email {}: {}.{}{}@{}".format(
+                i,
+                randomGenerator.last_name()[0].lower(),
+                randomGenerator.first_name()[0].lower(),
+                randomString(random.randint(3, 7)),
+                random.choice(email_domains)))
+
+def profileMenu(randomGenerator: RandomProfile):
     """ Profile generator. """
     printTitle("PROFILE GENERATOR")
     print(end=Fore.GREEN)
 
-    print("Profile:")
-    for property, value in randomGenerator.full_profile()[0].items():
-        print("\t{}: {}".format(property, value))
+    times = inputNumberSafely("How many to generate?: ", canNegative=False)
+
+    for i in range(1, times + 1):
+        print(f"Profile {i}:")
+        for property, value in randomGenerator.full_profile()[0].items():
+            print("\t{}: {}".format(property, value))
 
 
 
@@ -167,23 +212,23 @@ def main():
 
         print(end=Fore.GREEN)
         print("Content Table".center(lineLength))
-        print("(1) Name Generator     (2) Address generator".center(lineLength))
-        print("(3) Name+Address       (4) Email generator  ".center(lineLength))
-        print("(5) Profile Generator  (6) Exit             ".center(lineLength))
+        print("(1) Name generator     (2) Address generator".center(lineLength))
+        print("(3) Password generator (4) Email generator  ".center(lineLength))
+        print("(5) Profile generator  (6) Exit             ".center(lineLength))
         printSeparator()
 
         print(end=Fore.GREEN); option = input("Option: ")
 
         if option == '1':
-            loopUntilStopped(getName, randomGenerator)
+            loopUntilStopped(nameMenu, randomGenerator)
         elif option == '2':
-            loopUntilStopped(getAddress)
+            loopUntilStopped(addressMenu)
         elif option == '3':
-            loopUntilStopped(getNameAddress, randomGenerator)
+            loopUntilStopped(passwordMenu)
         elif option == '4':
-            loopUntilStopped(getEmail, randomGenerator)
+            loopUntilStopped(emailMenu, randomGenerator)
         elif option == '5':
-            loopUntilStopped(getProfile, randomGenerator)
+            loopUntilStopped(profileMenu, randomGenerator)
         elif option == '6':
             break
         else:
