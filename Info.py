@@ -2,10 +2,11 @@ import random
 import string
 from typing import Any, Callable
 
-from random_address import real_random_address_by_state, real_random_address
 import colorama
 from colorama import Fore, Style
+from random_address import real_random_address, real_random_address_by_state
 from random_profile import RandomProfile
+from random_profile.main import email_domains
 
 # All States Abbreviations are provided below
 # CA
@@ -86,6 +87,12 @@ def addressToString(address: dict) -> str:
     """ Converts the addresses produced by Random Address into a human-readable string. """
     return f"{address['address1']}, {address['city']}, {address['state']} {address['postalCode']}, USA"
 
+def randomString(length: int) -> str:
+    """ Generates a string of randomly-selected alaphanumeric characters of the given length. """
+    return ''.join(random.choice(randomString.alphanumerics) for _ in range(length))
+
+randomString.alphanumerics = string.ascii_letters + string.digits
+
 
 
 def getName(randomGenerator: RandomProfile):
@@ -126,22 +133,23 @@ def getNameAddress(randomGenerator: RandomProfile):
     print(f"Name: {randomGenerator.full_name()[0]}")
     print(f"Address: {addressToString(real_random_address())}")
     
-def getGmail():
-    """ Gmail generator. """
-    def random_char(y):
-        return ''.join(random.choice(string.ascii_letters) for x in range(y))
-
-    printTitle("GMAIL GENERATOR")
+def getEmail(randomGenerator: RandomProfile):
+    """ Email generator. """
+    printTitle("EMAIL GENERATOR")
     print(end=Fore.GREEN)
 
-    print(random_char(7) + "@gmail.com")
+    print("Email: {}.{}{}@{}".format(
+            randomGenerator.last_name()[0].lower(),
+            randomGenerator.first_name()[0].lower(),
+            randomString(random.randint(3, 7)),
+            random.choice(email_domains)))
 
 def getProfile(randomGenerator: RandomProfile):
     """ Profile generator. """
     printTitle("PROFILE GENERATOR")
     print(end=Fore.GREEN)
 
-    print("Profile : ")
+    print("Profile:")
     for property, value in randomGenerator.full_profile()[0].items():
         print("\t{}: {}".format(property, value))
 
@@ -160,7 +168,7 @@ def main():
         print(end=Fore.GREEN)
         print("Content Table".center(lineLength))
         print("(1) Name Generator     (2) Address generator".center(lineLength))
-        print("(3) Name+Address       (4) Gmail generator  ".center(lineLength))
+        print("(3) Name+Address       (4) Email generator  ".center(lineLength))
         print("(5) Profile Generator  (6) Exit             ".center(lineLength))
         printSeparator()
 
@@ -173,7 +181,7 @@ def main():
         elif option == '3':
             loopUntilStopped(getNameAddress, randomGenerator)
         elif option == '4':
-            loopUntilStopped(getGmail)
+            loopUntilStopped(getEmail, randomGenerator)
         elif option == '5':
             loopUntilStopped(getProfile, randomGenerator)
         elif option == '6':
