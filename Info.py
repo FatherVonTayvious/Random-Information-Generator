@@ -1,7 +1,20 @@
+"""
+A command-line tool for randomly generating various kinds of information.
+
+authors: TheArchitect#8198,
+         ona li toki e jan Epiphany tawa mi
+ ______    _   _
+|  ____|  | | | |
+| |__ __ _| |_| |__   ___ _ __
+|  __/ _` | __| '_ \ / _ \ '__|
+| | | (_| | |_| | | |  __/ |
+|_|  \__,_|\__|_| |_|\___|_|
+"""
+
 import random
 import secrets
 import string
-from typing import Any, Callable, Sequence
+from typing import Any, Callable, Sequence, Tuple
 
 import colorama
 from colorama import Fore, Style
@@ -9,24 +22,8 @@ from random_address import real_random_address, real_random_address_by_state
 from random_profile import RandomProfile
 from random_profile.main import email_domains
 
-# All States Abbreviations are provided below
-# CA
-# CT
-# VT
-# AL
-# AR
-# DC
-# FL
-# GA
-# KY
-# TN
-# MD
-# OK
-# TX
-
-
-# Length each line printed.
-lineLength = 44
+# Length of each line printed.
+lineLength = 50
 logoASCII = [" ______    _   _               ",
              "|  ____|  | | | |              ",
              "| |__ __ _| |_| |__   ___ _ __ ",
@@ -103,6 +100,11 @@ def addressToString(address: dict) -> str:
     """ Converts the addresses produced by Random Address into a human-readable string. """
     return f"{address['address1']}, {address['city']}, {address['state']} {address['postalCode']}, USA"
 
+def addressToCoordinates(address: dict) -> Tuple[int, int]:
+    """ Extracts coordinates from the addresses produced by Random Address"""
+    coordinates = address['coordinates']
+    return (coordinates['lat'], coordinates['lng'])
+
 def _randomString(choiceFunction: Callable[[Sequence], Any], length: int) -> str:
     """ Common code for random string generation to avoid code duplication. """
     return ''.join(choiceFunction(_randomString.alphanumerics) for _ in range(length))
@@ -144,17 +146,17 @@ def nameMenu(randomGenerator: RandomProfile):
 
 def addressMenu():
     """ Address generator. """
-    printTitle("ADDRESS GENERATOR")
+    printTitle("(REAL) ADDRESS GENERATOR")
     print(end=Fore.GREEN)
 
-    state = input("Enter a two-letter state (e.x. CA CT VT) to pull an address from. Enter nothing for all states: ")
+    state = input("Enter a two-letter state (e.x. CA CT VT) to pull addresses from. Enter nothing for all states: ")
+    # real_random_address_by_state() only recognizes upper case charaters.
+    sanatizedState = state.upper()
     times = inputNumberSafely("How many would you like to generate?: ", canNegative=False)
 
     for i in range(1, times + 1):
-        # real_random_address_by_state() only recognizes upper case charaters.
-        address = real_random_address_by_state(state.upper()) if state else real_random_address()
+        address = real_random_address_by_state(sanatizedState) if state else real_random_address()
 
-        # real_random_address_by_state() can return an empty dict if no addresses could be found for the given state.
         if address: 
             print(f"Address {i}: {addressToString(address)}")
         else:       
@@ -198,6 +200,24 @@ def profileMenu(randomGenerator: RandomProfile):
         for property, value in randomGenerator.full_profile()[0].items():
             print("\t{}: {}".format(property, value))
 
+def coordinateMenu():
+    """ Coordinate generator. """
+    printTitle("(USA) COORDINATE GENERATOR")
+    print(end=Fore.GREEN)
+
+    state = input("Enter a two-letter state (e.x. CA CT VT) to pull coordinates from. Enter nothing for all states: ")
+    # real_random_address_by_state() only recognizes upper case charaters.
+    sanatizedState = state.upper()
+    times = inputNumberSafely("How many to generate?: ", canNegative=False)
+
+    for i in range(1, times + 1):
+        address = real_random_address_by_state(sanatizedState) if sanatizedState else real_random_address()
+
+        if address:
+            coordinates = addressToCoordinates(address)
+            print("Coordinate {}: ({:.6f}, {:.6f})".format(i, coordinates[0], coordinates[1]))
+        else:       
+            print(f"{i}: No coordinates found for '{state}'")
 
 
 def main():
@@ -212,9 +232,10 @@ def main():
 
         print(end=Fore.GREEN)
         print("Content Table".center(lineLength))
-        print("(1) Name generator     (2) Address generator".center(lineLength))
-        print("(3) Password generator (4) Email generator  ".center(lineLength))
-        print("(5) Profile generator  (6) Exit             ".center(lineLength))
+        print("(1) Name generator     (2) Address generator   ".center(lineLength))
+        print("(3) Password generator (4) Email generator     ".center(lineLength))
+        print("(5) Profile generator  (6) Coordinate generator".center(lineLength))
+        print("(7) Exit                                       ".center(lineLength))
         printSeparator()
 
         print(end=Fore.GREEN); option = input("Option: ")
@@ -230,6 +251,8 @@ def main():
         elif option == '5':
             loopUntilStopped(profileMenu, randomGenerator)
         elif option == '6':
+            loopUntilStopped(coordinateMenu)
+        elif option == '7':
             break
         else:
             print(end=Fore.RED); print(f"Invalid option '{option}'!")
