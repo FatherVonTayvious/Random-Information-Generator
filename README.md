@@ -26,7 +26,7 @@ Generates passwords of the user's desired length. Passwords are generated using 
 
 ### Email generator
 
-Generates random emails. The emails are formed by combining a random name and a random domain from RandomProfile, along with a set of random alphanumeric characters.
+Generates random emails. The emails are formed by combining a random name, either a user-selected domain or random one from RandomProfile, a set of random alphanumeric characters.
 
 Example(s):
 ```text

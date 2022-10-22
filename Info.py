@@ -176,6 +176,8 @@ def emailMenu(randomGenerator: RandomProfile):
     """ Email generator. """
     print(end=Fore.GREEN)
 
+    domain = input("Enter a domain to use (e.x. gmail.com.) Leave blank to have one randomly"
+                   " selcted: ").strip()
     times = inputNumberSafely("How many to generate?: ", canNegative=False)
 
     for i in range(1, times + 1):
@@ -184,7 +186,7 @@ def emailMenu(randomGenerator: RandomProfile):
                 randomGenerator.last_name()[0].lower(),
                 randomGenerator.first_name()[0].lower(),
                 randomString(random.randint(3, 7)),
-                random.choice(email_domains)))
+                domain if domain else random.choice(email_domains)))
 
 def profileMenu(randomGenerator: RandomProfile):
     """ Profile generator. """
