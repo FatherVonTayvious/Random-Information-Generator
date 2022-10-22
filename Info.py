@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 A command-line tool for randomly generating various kinds of information.
 
@@ -76,7 +78,7 @@ def askToContinue() -> bool:
         if not choice:
             continue
 
-        sanatizedChoice = choice[0].lower()
+        sanatizedChoice = choice[0].strip().lower()
 
         if sanatizedChoice == 'y':
             return True
@@ -125,8 +127,8 @@ def nameMenu(randomGenerator: RandomProfile):
     """ Name generator. """
     print(end=Fore.GREEN)
 
-    choice = input("Full, first, or last name: ")
-    sanatizedChoice = choice.lower()
+    choice = input("Full, first, or last name?: ")
+    sanatizedChoice = choice.strip().lower()
     chosenGenerator = None
 
     if sanatizedChoice == "full":
@@ -149,7 +151,7 @@ def addressMenu():
 
     state = input("Enter a two-letter state (e.x. CA CT VT) to pull addresses from. Enter nothing for all states: ")
     # real_random_address_by_state() only recognizes upper case charaters.
-    sanatizedState = state.upper()
+    sanatizedState = state.strip().upper()
     times = inputNumberSafely("How many would you like to generate?: ", canNegative=False)
 
     for i in range(1, times + 1):
@@ -201,7 +203,7 @@ def coordinateMenu():
 
     state = input("Enter a two-letter state (e.x. CA CT VT) to pull coordinates from. Enter nothing for all states: ")
     # real_random_address_by_state() only recognizes upper case charaters.
-    sanatizedState = state.upper()
+    sanatizedState = state.strip().upper()
     times = inputNumberSafely("How many to generate?: ", canNegative=False)
 
     for i in range(1, times + 1):
@@ -214,6 +216,7 @@ def coordinateMenu():
             print(f"{i}: No coordinates found for '{state}'")
 
 
+
 def main():
     randomGenerator = RandomProfile()
     # Initializes ANSI color code support for Windows if needed.
@@ -223,7 +226,6 @@ def main():
 
     while True:
         printTitle("Welcome to Random Information Generation")
-
         print(end=Fore.GREEN)
         print("Content Table".center(lineLength))
         print("(1) Name generator     (2) Address generator   ".center(lineLength))
@@ -232,30 +234,41 @@ def main():
         print("(7) Exit                                       ".center(lineLength))
         printSeparator()
 
-        print(end=Fore.GREEN); option = input("Option: ")
+        option = None
 
-        if option == '1':
-            printTitle("NAME GENERATOR")
-            loopUntilStopped(nameMenu, randomGenerator)
-        elif option == '2':
-            printTitle("(REAL) ADDRESS GENERATOR")
-            loopUntilStopped(addressMenu)
-        elif option == '3':
-            printTitle("PASSWORD GENERATOR")
-            loopUntilStopped(passwordMenu)
-        elif option == '4':
-            printTitle("EMAIL GENERATOR")
-            loopUntilStopped(emailMenu, randomGenerator)
-        elif option == '5':
-            printTitle("(FAKE) PROFILE GENERATOR")
-            loopUntilStopped(profileMenu, randomGenerator)
-        elif option == '6':
-            printTitle("(USA) COORDINATE GENERATOR")
-            loopUntilStopped(coordinateMenu)
-        elif option == '7':
+        # Inner loop so that title and select menu don't continuosly clutter the interface.
+        while True:
+            print(end=Fore.GREEN); option = input("Option: ")
+            sanatizedOption = option.strip()
+
+            if sanatizedOption == '1':
+                printTitle("NAME GENERATOR")
+                loopUntilStopped(nameMenu, randomGenerator)
+            elif sanatizedOption == '2':
+                printTitle("(REAL) ADDRESS GENERATOR")
+                loopUntilStopped(addressMenu)
+            elif sanatizedOption == '3':
+                printTitle("PASSWORD GENERATOR")
+                loopUntilStopped(passwordMenu)
+            elif sanatizedOption == '4':
+                printTitle("EMAIL GENERATOR")
+                loopUntilStopped(emailMenu, randomGenerator)
+            elif sanatizedOption == '5':
+                printTitle("(FAKE) PROFILE GENERATOR")
+                loopUntilStopped(profileMenu, randomGenerator)
+            elif sanatizedOption == '6':
+                printTitle("(USA) COORDINATE GENERATOR")
+                loopUntilStopped(coordinateMenu)
+            elif option != '7':
+                # No need to print an error if they typed nothing.
+                if sanatizedOption:
+                    print(end=Fore.RED); print(f"Invalid option '{option}'!")
+                continue
+
             break
-        else:
-            print(end=Fore.RED); print(f"Invalid option '{option}'!")
+
+        if option == '7':
+            break
 
 if __name__ == '__main__':
     main()
