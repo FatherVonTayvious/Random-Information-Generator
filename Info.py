@@ -78,7 +78,7 @@ def askToContinue() -> bool:
         if not choice:
             continue
 
-        sanatizedChoice = choice[0].strip().lower()
+        sanatizedChoice = choice.strip()[0].lower()
 
         if sanatizedChoice == 'y':
             return True
