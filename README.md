@@ -69,14 +69,23 @@ ip_address: 38.10.38.67
 
 Generates real, randomly picked coordinates from the USA using Random Address and <https://openaddresses.io>. Offers a choice to pull either from a specific state or all states.
 
+### Coin flip generator
+
+Generates coin flips, heads or tails.
+
+### Random number generator
+
+Generates random integer numbers between two number (inclusive) that you supply.
+
 ## Dependencies
 
-- Python 3
+You will need to have [Python 3](https://www.python.org "Python homepage") installed on your system.
+
 - Colorama - <https://pypi.org/project/colorama>
 - Random Address - <https://pypi.org/project/random-address>
 - RandomProfile - <https://pypi.org/project/random-profile>
 
-The dependencies can be installed using the following command(s):
+The package dependencies can be installed using the following command(s):
 ```console
 pip install colorama random-address random-profile
 ```
