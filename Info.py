@@ -60,6 +60,7 @@ def inputNumberSafely(prompt: object=..., canNegative: bool=True) -> int:
     """ Prints the prompt to the user and returns the number they give. Should they not give a valid number it will ask them until
         they do. If canNegative is False it will not accept negative numbers, make sure to tell user if necessary. """
     while True:
+        print(end=Fore.GREEN)
         choice = input(prompt)
 
         try:
@@ -69,11 +70,13 @@ def inputNumberSafely(prompt: object=..., canNegative: bool=True) -> int:
             return choice
 
         except ValueError:
+            print(end=Fore.RED)
             print(f"Invalid number '{choice}'!")
 
 def askToContinue() -> bool:
     """ Asks the user if they would like to continue, returning True for yes and False for no. """
     while True:
+        print(end=Fore.GREEN)
         choice = input("Would you like to continue? [Y/n]: ")
         if not choice:
             continue
@@ -85,6 +88,7 @@ def askToContinue() -> bool:
         elif sanatizedChoice == 'n':
             return False
         else:
+            print(end=Fore.RED)
             print(f"Invalid option '{choice}'!")
 
 def loopUntilStopped(function: Callable[..., None], *arguments: Any):
@@ -217,6 +221,33 @@ def coordinateMenu():
         else:       
             print(f"{i}: No coordinates found for '{state}'")
 
+def coinFlipMenu():
+    """ Coin flip generator. """
+    print(end=Fore.GREEN)
+
+    times = inputNumberSafely("How many to generate?: ", canNegative=False)
+    for i in range(1, times + 1):
+        flip = random.choice(["heads", "tails"])
+        print(f"Flip {i}: {flip}")
+
+def randomNumberMenu():
+    """ Random number generator. """
+    print(end=Fore.GREEN)
+    
+    start = inputNumberSafely("What is the minimum number to generate? (inclusive): ")
+    end   = inputNumberSafely("What is the maximum number to generate? (inclusive): ")
+
+    if start > end:
+        print(end=Fore.RED)
+        print(f"Invalid range ({start}-{end})! The minimum cannot be larger than the maximum")
+        return
+
+    times = inputNumberSafely("How many to generate?: ", canNegative=False)
+
+    for i in range(1, times + 1):
+        number = random.randint(start, end)
+        print(f"Number {i}: {number}")
+
 
 
 def main():
@@ -230,10 +261,11 @@ def main():
         printTitle("Welcome to Random Information Generation")
         print(end=Fore.GREEN)
         print("Content Table".center(lineLength))
-        print("(1) Name generator     (2) Address generator   ".center(lineLength))
-        print("(3) Password generator (4) Email generator     ".center(lineLength))
-        print("(5) Profile generator  (6) Coordinate generator".center(lineLength))
-        print("(7) Exit                                       ".center(lineLength))
+        print("(1) Name gen        (2) Address gen      ".center(lineLength))
+        print("(3) Password gen    (4) Email gen        ".center(lineLength))
+        print("(5) Profile gen     (6) Coordinate gen   ".center(lineLength))
+        print("(7) Coin flip gen   (8) Random number gen".center(lineLength))
+        print("(9) Exit                                 ".center(lineLength))
         printSeparator()
 
         option = None
@@ -247,7 +279,7 @@ def main():
                 printTitle("NAME GENERATOR")
                 loopUntilStopped(nameMenu, randomGenerator)
             elif sanatizedOption == '2':
-                printTitle("(REAL) ADDRESS GENERATOR")
+                printTitle("(USA) ADDRESS GENERATOR")
                 loopUntilStopped(addressMenu)
             elif sanatizedOption == '3':
                 printTitle("PASSWORD GENERATOR")
@@ -261,7 +293,13 @@ def main():
             elif sanatizedOption == '6':
                 printTitle("(USA) COORDINATE GENERATOR")
                 loopUntilStopped(coordinateMenu)
-            elif option != '7':
+            elif sanatizedOption == '7':
+                printTitle("COIN FLIP GENERATOR")
+                loopUntilStopped(coinFlipMenu)
+            elif sanatizedOption == '8':
+                printTitle("RANDOM NUMBER GENERATOR")
+                loopUntilStopped(randomNumberMenu)
+            elif sanatizedOption != '9':
                 # No need to print an error if they typed nothing.
                 if sanatizedOption:
                     print(end=Fore.RED); print(f"Invalid option '{option}'!")
@@ -269,7 +307,7 @@ def main():
 
             break
 
-        if option == '7':
+        if sanatizedOption == '9':
             break
 
 if __name__ == '__main__':
