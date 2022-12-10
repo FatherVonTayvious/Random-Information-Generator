@@ -122,8 +122,8 @@ Which can be installed using the following command(s):
 pip install colorama random-address random-profile
 ```
 
-The [stand-alone script](src/Info.py "Random-Information-Generator") can then be run using either of the following commands in the project directory:
+The [stand-alone script](src/random_information_generator/Info.py "Random-Information-Generator") can then be run using either of the following commands in the project directory:
 ```console
-python3 src/Info.py
-./src/Info.py
+python3 src/random_information_generator/Info.py
+./src/random_information_generator/Info.py
 ```
