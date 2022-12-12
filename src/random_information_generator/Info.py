@@ -49,7 +49,6 @@ def printTitle(title: str):
 
     printSeparator()
 
-    # Emphasis on perfected, look at how it was on the 4th commit. You're welcome.
     print(end=Fore.YELLOW)
     print("Tool made by TheArchitect#8198".center(lineLength))
     print("     perfected by jan Epiphany".center(lineLength))

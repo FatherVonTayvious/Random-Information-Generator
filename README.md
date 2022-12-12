@@ -10,6 +10,8 @@
 # Random-Information-Generator
 A command-line tool for randomly generating various kinds of information.
 
+---
+
 ## Available generators
 
 ### Name generator
@@ -77,23 +79,51 @@ Generates coin flips, heads or tails.
 
 Generates random integer numbers between two number (inclusive) that you supply.
 
-## Dependencies
+---
 
-You will need to have [Python 3](https://www.python.org "Python homepage") installed on your system.
+## How to build
+
+Run the following commands in the project directory:
+
+```console
+python3 -m build
+```
+
+The built packages will appear in [dist/.](dist "Distributables folder.")
+
+## Installation
+
+You can download the latest package from [Releases,](https://github.com/FatherVonTayvious/Random-Information-Generator/releases "Random-Information-Generator releases.") or build from source, and install it using the following command(s):
+
+```console
+pip install <package name goes here>
+```
+
+## How to run
+
+[Python 3](https://www.python.org "Python homepage") is required.
+
+If Random-Information-Generator was installed via package, simply run the following command(s):
+
+```console
+randominformationgenerator
+```
+
+Alternatively, Random-Information-Generator is a stand-alone script and can be run by following these instructions:
+
+The following dependencies are required:
 
 - Colorama - <https://pypi.org/project/colorama>
 - Random Address - <https://pypi.org/project/random-address>
 - RandomProfile - <https://pypi.org/project/random-profile>
 
-The package dependencies can be installed using the following command(s):
+Which can be installed using the following command(s):
 ```console
 pip install colorama random-address random-profile
 ```
 
-## How to run
-
-The [main file](Info.py "Random-Information-Generator") can be run using either of the following commands in the project directory:
+The [stand-alone script](src/random_information_generator/Info.py "Random-Information-Generator") can then be run using either of the following commands in the project directory:
 ```console
-python3 Info.py
-./Info.py
+python3 src/random_information_generator/Info.py
+./src/random_information_generator/Info.py
 ```
