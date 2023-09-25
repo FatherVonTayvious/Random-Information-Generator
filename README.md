@@ -93,7 +93,13 @@ The built packages will appear in [dist/.](dist "Distributables folder.")
 
 ## Installation
 
-You can download the latest package from [Releases,](https://github.com/FatherVonTayvious/Random-Information-Generator/releases "Random-Information-Generator releases.") or build from source, and install it using the following command(s):
+Random-Information-Generator is avalible on [PyPi,](https://pypi.org/project/random-information-generator "Random-Information-Generator on PyPi") and can be installed by running the following command(s):
+
+```console
+pip install random-information-generator
+```
+
+Alternatively, You can download the latest package from [Releases,](https://github.com/FatherVonTayvious/Random-Information-Generator/releases "Random-Information-Generator releases.") or build from source, and install it using the following command(s):
 
 ```console
 pip install <package name goes here>
@@ -127,3 +133,12 @@ The [stand-alone script](src/random_information_generator/Info.py "Random-Inform
 python3 src/random_information_generator/Info.py
 ./src/random_information_generator/Info.py
 ```
+
+---
+
+## Changelog
+
+- Fixed calls to functions from random_profile.
+- Fixed printing of logo.
+- Fixed packaging dependencies.
+- Added license (GPLv3).
