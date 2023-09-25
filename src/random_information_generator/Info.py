@@ -42,12 +42,13 @@ email_domains = [ "gmail.com", "yahoo.com", "hotmail.com", "aol.com"
 
 # Length of each line printed.
 lineLength = 50
-logoASCII = [" ______    _   _               ",
-             "|  ____|  | | | |              ",
-             "| |__ __ _| |_| |__   ___ _ __ ",
-             "|  __/ _` | __| '_ \ / _ \ '__|",
-             "| | | (_| | |_| | | |  __/ |   ",
-             "|_|  \__,_|\__|_| |_|\___|_|   "  ]
+logoASCII = [ r" ______    _   _               "
+            , r"|  ____|  | | | |              "
+            , r"| |__ __ _| |_| |__   ___ _ __ "
+            , r"|  __/ _` | __| '_ \ / _ \ '__|"
+            , r"| | | (_| | |_| | | |  __/ |   "
+            , r"|_|  \__,_|\__|_| |_|\___|_|   "
+            ]
 
 def printSeparator():
     """ Prints the separator bar used throughout the user interface. """
