@@ -5,6 +5,6 @@
 - Fixed packaging dependencies.
 - Added license (GPLv3).
 
-## 0.1.0
+## 1.0
 
 - Initial release.
