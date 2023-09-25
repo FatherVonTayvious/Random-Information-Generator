@@ -22,16 +22,33 @@ import colorama
 from colorama import Fore, Style
 from random_address import real_random_address, real_random_address_by_state
 from random_profile import RandomProfile
-from random_profile.main import email_domains
+
+
+
+# Email domains for the email generator.
+email_domains = [ "gmail.com", "yahoo.com", "hotmail.com", "aol.com"
+                , "hotmail.co.uk", "hotmail.fr", "msn.com", "yahoo.fr"
+                , "wanadoo.fr", "orange.fr", "comcast.net", "yahoo.co.uk"
+                , "yahoo.com.br", "yahoo.co.in", "live.com", "rediffmail.com"
+                , "free.fr", "gmx.de", "web.de", "yandex.ru", "ymail.com"
+                , "libero.it", "outlook.com", "uol.com.br", "bol.com.br"
+                , "mail.ru", "cox.net", "hotmail.it", "sbcglobal.net", "sfr.fr"
+                , "live.fr", "verizon.net", "live.co.uk", "bigpond.com"
+                , "terra.com.br", "yahoo.it", "neuf.fr", "alice.it"
+                , "rocketmail.com", "att.net", "laposte.net", "facebook.com"
+                , "bellsouth.net", "yahoo.in", "hotmail.es" ]
+
+
 
 # Length of each line printed.
 lineLength = 50
-logoASCII = [" ______    _   _               ",
-             "|  ____|  | | | |              ",
-             "| |__ __ _| |_| |__   ___ _ __ ",
-             "|  __/ _` | __| '_ \ / _ \ '__|",
-             "| | | (_| | |_| | | |  __/ |   ",
-             "|_|  \__,_|\__|_| |_|\___|_|   "  ]
+logoASCII = [ r" ______    _   _               "
+            , r"|  ____|  | | | |              "
+            , r"| |__ __ _| |_| |__   ___ _ __ "
+            , r"|  __/ _` | __| '_ \ / _ \ '__|"
+            , r"| | | (_| | |_| | | |  __/ |   "
+            , r"|_|  \__,_|\__|_| |_|\___|_|   "
+            ]
 
 def printSeparator():
     """ Prints the separator bar used throughout the user interface. """
@@ -65,7 +82,7 @@ def inputNumberSafely(prompt: object=..., canNegative: bool=True) -> int:
         try:
             choice = int(choice)
             if not canNegative and choice < 0: raise ValueError
-                
+
             return choice
 
         except ValueError:
@@ -135,18 +152,18 @@ def nameMenu(randomGenerator: RandomProfile):
     chosenGenerator = None
 
     if sanatizedChoice == "full":
-        chosenGenerator = randomGenerator.full_name
+        chosenGenerator = randomGenerator.full_names
     elif sanatizedChoice == "first":
-        chosenGenerator = randomGenerator.first_name
+        chosenGenerator = randomGenerator.first_names
     elif sanatizedChoice == 'last':
-        chosenGenerator = randomGenerator.last_name
+        chosenGenerator = randomGenerator.last_names
     else:
         print(f"Invalid option '{choice}'!")
         return
 
     times = inputNumberSafely("How many to generate?: ", canNegative=False)
     for i in range(1, times + 1):
-        print(f"Name {i}: {chosenGenerator()[0]}")
+        print(f"Name {i}: {chosenGenerator()}")
 
 def addressMenu():
     """ Address generator. """
@@ -160,9 +177,9 @@ def addressMenu():
     for i in range(1, times + 1):
         address = real_random_address_by_state(sanatizedState) if state else real_random_address()
 
-        if address: 
+        if address:
             print(f"Address {i}: {addressToString(address)}")
-        else:       
+        else:
             print(f"{i}: No addresses found for '{state}'")
 
 def passwordMenu():
@@ -173,8 +190,8 @@ def passwordMenu():
     times = inputNumberSafely("How many to generate?: ", canNegative=False)
 
     for i in range(1, times + 1):
-        print(f"Password {i}: {randomStringSecure(length)}") 
-    
+        print(f"Password {i}: {randomStringSecure(length)}")
+
 def emailMenu(randomGenerator: RandomProfile):
     """ Email generator. """
     print(end=Fore.GREEN)
@@ -186,8 +203,8 @@ def emailMenu(randomGenerator: RandomProfile):
     for i in range(1, times + 1):
         print("Email {}: {}.{}{}@{}".format(
                 i,
-                randomGenerator.last_name()[0].lower(),
-                randomGenerator.first_name()[0].lower(),
+                randomGenerator.last_names().lower(),
+                randomGenerator.first_names().lower(),
                 randomString(random.randint(3, 7)),
                 domain if domain else random.choice(email_domains)))
 
@@ -199,7 +216,7 @@ def profileMenu(randomGenerator: RandomProfile):
 
     for i in range(1, times + 1):
         print(f"Profile {i}:")
-        for property, value in randomGenerator.full_profile()[0].items():
+        for property, value in randomGenerator.full_profiles()[0].items():
             print("\t{}: {}".format(property, value))
 
 def coordinateMenu():
@@ -217,7 +234,7 @@ def coordinateMenu():
         if address:
             coordinates = addressToCoordinates(address)
             print("Coordinate {}: ({:.6f}, {:.6f})".format(i, coordinates[0], coordinates[1]))
-        else:       
+        else:
             print(f"{i}: No coordinates found for '{state}'")
 
 def coinFlipMenu():
@@ -232,7 +249,7 @@ def coinFlipMenu():
 def randomNumberMenu():
     """ Random number generator. """
     print(end=Fore.GREEN)
-    
+
     start = inputNumberSafely("What is the minimum number to generate? (inclusive): ")
     end   = inputNumberSafely("What is the maximum number to generate? (inclusive): ")
 
