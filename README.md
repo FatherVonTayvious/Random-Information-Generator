@@ -20,7 +20,7 @@ Generates randomly picked names using RandomProfile. Offers a choice between eit
 
 ### Address generator
 
-Generates real, randomly picked addresses from the USA using Random Address and <https://openaddresses.io>. Offers a choice to pull either from a specific state or all states.
+Generates real, randomly picked addresses from the USA using Random Address and https://openaddresses.io. Offers a choice to pull either from a specific state or all states.
 
 ### Password generator
 
@@ -69,7 +69,7 @@ ip_address: 38.10.38.67
 
 ### Coordinate generator
 
-Generates real, randomly picked coordinates from the USA using Random Address and <https://openaddresses.io>. Offers a choice to pull either from a specific state or all states.
+Generates real, randomly picked coordinates from the USA using Random Address and https://openaddresses.io. Offers a choice to pull either from a specific state or all states.
 
 ### Coin flip generator
 
@@ -93,7 +93,13 @@ The built packages will appear in [dist/.](dist "Distributables folder.")
 
 ## Installation
 
-You can download the latest package from [Releases,](https://github.com/FatherVonTayvious/Random-Information-Generator/releases "Random-Information-Generator releases.") or build from source, and install it using the following command(s):
+Random-Information-Generator is avalible on [PyPi,](https://pypi.org/project/random-information-generator "Random-Information-Generator on PyPi") and can be installed by running the following command(s):
+
+```console
+pip install random-information-generator
+```
+
+Alternatively, You can download the latest package from [Releases,](https://github.com/FatherVonTayvious/Random-Information-Generator/releases "Random-Information-Generator releases.") or build from source, and install it using the following command(s):
 
 ```console
 pip install <package name goes here>
@@ -113,9 +119,9 @@ Alternatively, Random-Information-Generator is a stand-alone script and can be r
 
 The following dependencies are required:
 
-- Colorama - <https://pypi.org/project/colorama>
-- Random Address - <https://pypi.org/project/random-address>
-- RandomProfile - <https://pypi.org/project/random-profile>
+- Colorama - https://pypi.org/project/colorama
+- Random Address - https://pypi.org/project/random-address
+- RandomProfile - https://pypi.org/project/random-profile
 
 Which can be installed using the following command(s):
 ```console
@@ -127,3 +133,12 @@ The [stand-alone script](src/random_information_generator/Info.py "Random-Inform
 python3 src/random_information_generator/Info.py
 ./src/random_information_generator/Info.py
 ```
+
+---
+
+## Changelog
+
+- Fixed calls to functions from random_profile.
+- Fixed printing of logo.
+- Fixed packaging dependencies.
+- Added license (GPLv3).
