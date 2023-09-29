@@ -20,7 +20,7 @@ Generates randomly picked names using RandomProfile. Offers a choice between eit
 
 ### Address generator
 
-Generates real, randomly picked addresses from the USA using Random Address and <https://openaddresses.io>. Offers a choice to pull either from a specific state or all states.
+Generates real, randomly picked addresses from the USA using Random Address and https://openaddresses.io. Offers a choice to pull either from a specific state or all states.
 
 ### Password generator
 
@@ -69,7 +69,7 @@ ip_address: 38.10.38.67
 
 ### Coordinate generator
 
-Generates real, randomly picked coordinates from the USA using Random Address and <https://openaddresses.io>. Offers a choice to pull either from a specific state or all states.
+Generates real, randomly picked coordinates from the USA using Random Address and https://openaddresses.io. Offers a choice to pull either from a specific state or all states.
 
 ### Coin flip generator
 
@@ -119,9 +119,9 @@ Alternatively, Random-Information-Generator is a stand-alone script and can be r
 
 The following dependencies are required:
 
-- Colorama - <https://pypi.org/project/colorama>
-- Random Address - <https://pypi.org/project/random-address>
-- RandomProfile - <https://pypi.org/project/random-profile>
+- Colorama - https://pypi.org/project/colorama
+- Random Address - https://pypi.org/project/random-address
+- RandomProfile - https://pypi.org/project/random-profile
 
 Which can be installed using the following command(s):
 ```console
